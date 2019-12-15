@@ -1,5 +1,5 @@
 # reg-info
 
-Ios Application To Get Vehicle info
+IOS Application - Get Vehicle info
 
 Use DVLA api 
