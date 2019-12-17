@@ -40,9 +40,27 @@ struct ContentView: View {
                     .foregroundColor(Color.black)
                     .textFieldStyle(CustomTextFieldStyle())
                     .padding()
+                    .offset(y: -10)
                     .autocapitalization(UITextAutocapitalizationType.allCharacters)
                     .multilineTextAlignment(.center)
                     .fixedSize()
+                
+                Button(action: {
+                    print("Show vehicle Info")
+                  }) {
+                    HStack {
+                        Image(systemName: "car")
+                            .font(.title)
+                        Text("Get Vehicle Info")
+                            .fontWeight(.semibold)
+                            .font(.system(size: 18))
+                    }
+                    .frame(width: 210, height: 30, alignment: .center)
+                    .padding()
+                    .foregroundColor(.white)
+                    .background(Color(appBlue))
+                    .cornerRadius(5)
+                }
             }
         }
         
