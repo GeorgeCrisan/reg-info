@@ -16,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0D08883123B4F89F00E6F7AF /* development.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = development.xcconfig; sourceTree = "<group>"; };
+		0D08883223B4F8B700E6F7AF /* production.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = production.xcconfig; sourceTree = "<group>"; };
 		0DE1BCEB23A6C48700A5AF79 /* Reg Info.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Reg Info.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		0DE1BCEE23A6C48700A5AF79 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0DE1BCF023A6C48700A5AF79 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -37,6 +39,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0D08882F23B4F86F00E6F7AF /* Configs */ = {
+			isa = PBXGroup;
+			children = (
+				0D08883123B4F89F00E6F7AF /* development.xcconfig */,
+				0D08883223B4F8B700E6F7AF /* production.xcconfig */,
+			);
+			path = Configs;
+			sourceTree = "<group>";
+		};
 		0DE1BCE223A6C48700A5AF79 = {
 			isa = PBXGroup;
 			children = (
@@ -56,6 +67,7 @@
 		0DE1BCED23A6C48700A5AF79 /* reg-info */ = {
 			isa = PBXGroup;
 			children = (
+				0D08882F23B4F86F00E6F7AF /* Configs */,
 				0DE1BCEE23A6C48700A5AF79 /* AppDelegate.swift */,
 				0DE1BCF023A6C48700A5AF79 /* SceneDelegate.swift */,
 				0DE1BCF223A6C48700A5AF79 /* ContentView.swift */,
