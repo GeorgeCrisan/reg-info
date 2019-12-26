@@ -21,6 +21,9 @@ struct ContentView: View {
     let appBlue = UIColor(r: 0, g: 142, b: 207)
     
     public func fetchInfo(regNr: String)  {
+        print(EnvironmentVars.apiSECRET);
+        print(EnvironmentVars.apiKEY);
+        print(EnvironmentVars.apiURL);
         print("info fetched \(regNr)")
 
     }
@@ -45,7 +48,8 @@ struct ContentView: View {
                     .foregroundColor(Color.black)
                     .textFieldStyle(CustomTextFieldStyle())
                     .padding()
-                    .offset(y: -10)                    .autocapitalization(UITextAutocapitalizationType.allCharacters)
+                    .offset(y: -10)
+                    .autocapitalization(UITextAutocapitalizationType.allCharacters)
                     .multilineTextAlignment(.center)
                     .fixedSize()
                 
