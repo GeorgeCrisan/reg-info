@@ -17,16 +17,58 @@ extension UIColor {
 struct ContentView: View {
     
     @State private var reg: String = "".uppercased();
+    @State private var results = [Vehicle]()
+    @State private var errorMsg: String = ""
     
     let appBlue = UIColor(r: 0, g: 142, b: 207)
-    
-    public func fetchInfo(regNr: String)  {
-        print(EnvironmentVars.apiSECRET);
-        print(EnvironmentVars.apiKEY);
-        print(EnvironmentVars.apiURL);
-        print("info fetched \(regNr)")
-
-    }
+        
+    func fetchJsonData(regNr: String) {
+        
+        if (regNr.count == 0) {
+            self.errorMsg = "Wrong input, please try again with a valid registration number!";
+            return
+        }
+        
+          let url = EnvironmentVars.apiURL;
+          let secret = EnvironmentVars.apiSECRET;
+          let headerKey = EnvironmentVars.apiKEY;
+          let session = URLSession.shared
+          var request = URLRequest(url: url)
+          request.httpMethod = "POST";
+          request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+          request.setValue(secret, forHTTPHeaderField: headerKey)
+          
+          let bodyData = [
+              "registrationNumber": regNr
+          ];
+          
+          if let jsonData = try? JSONSerialization.data(withJSONObject: bodyData, options: []) {
+              session.uploadTask(with: request, from: jsonData) { data, response , error in
+                    
+                
+                if let httpResponse = response as? HTTPURLResponse {
+                    if (httpResponse.statusCode != 200) {
+                        self.errorMsg = "Wrong input, please try again with a valid registration number!";
+                        return;
+                    } else {
+                        self.errorMsg = "Ok";
+                    }
+                    
+                }
+                
+                  if let data = data {
+                    if let decodedResponse = try? JSONDecoder().decode(Vehicle.self, from: data) {
+                        print("in try 2");
+                        print(decodedResponse);
+                          DispatchQueue.main.async {
+                            self.results = [decodedResponse]
+                          }
+                      }
+                  }
+                  return
+              }.resume()
+          }
+      }
     
     public struct CustomTextFieldStyle : TextFieldStyle {
             let appYellow = UIColor(r: 255, g: 216, b: 0)
@@ -44,6 +86,12 @@ struct ContentView: View {
         ZStack {
             Image("bgimage")
             VStack {
+                
+                Text("Temp")
+                .padding()
+                .offset(y: -50)
+
+                
                 TextField("Enter Vehicle REG", text: $reg)
                     .foregroundColor(Color.black)
                     .textFieldStyle(CustomTextFieldStyle())
@@ -55,7 +103,9 @@ struct ContentView: View {
                 
                 Button(action: {
                     print("Show vehicle Info")
-                    self.fetchInfo(regNr: self.reg)
+                    print(self.errorMsg)
+                    print(self.results)
+                    self.fetchJsonData(regNr: self.reg)
                   }) {
                     HStack {
                         Image(systemName: "car")
