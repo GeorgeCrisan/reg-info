@@ -20,6 +20,11 @@ struct ContentView: View {
     
     let appBlue = UIColor(r: 0, g: 142, b: 207)
     
+    public func fetchInfo(regNr: String)  {
+        print("info fetched \(regNr)")
+
+    }
+    
     public struct CustomTextFieldStyle : TextFieldStyle {
             let appYellow = UIColor(r: 255, g: 216, b: 0)
            public func _body(configuration: TextField<Self._Label>) -> some View {
@@ -40,13 +45,13 @@ struct ContentView: View {
                     .foregroundColor(Color.black)
                     .textFieldStyle(CustomTextFieldStyle())
                     .padding()
-                    .offset(y: -10)
-                    .autocapitalization(UITextAutocapitalizationType.allCharacters)
+                    .offset(y: -10)                    .autocapitalization(UITextAutocapitalizationType.allCharacters)
                     .multilineTextAlignment(.center)
                     .fixedSize()
                 
                 Button(action: {
                     print("Show vehicle Info")
+                    self.fetchInfo(regNr: self.reg)
                   }) {
                     HStack {
                         Image(systemName: "car")
