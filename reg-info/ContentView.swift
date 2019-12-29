@@ -14,6 +14,7 @@ extension UIColor {
     }
 }
 
+
 struct ContentView: View {
     
     @State private var reg: String = "".uppercased();
@@ -25,7 +26,7 @@ struct ContentView: View {
     func fetchJsonData(regNr: String) {
         
         if (regNr.count == 0) {
-            self.errorMsg = "Wrong input, please try again with a valid registration number!";
+            self.errorMsg = "Wrong input, please try again!";
             return
         }
         
@@ -48,17 +49,17 @@ struct ContentView: View {
                 
                 if let httpResponse = response as? HTTPURLResponse {
                     if (httpResponse.statusCode != 200) {
-                        self.errorMsg = "Wrong input, please try again with a valid registration number!";
+                        self.errorMsg = "Wrong input, please try again!";
                         return;
                     } else {
-                        self.errorMsg = "Ok";
+                        self.errorMsg = "";
                     }
                     
                 }
                 
                   if let data = data {
                     if let decodedResponse = try? JSONDecoder().decode(Vehicle.self, from: data) {
-                        print("in try 2");
+                        
                         print(decodedResponse);
                           DispatchQueue.main.async {
                             self.results = [decodedResponse]
@@ -85,11 +86,28 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             Image("bgimage")
+            
             VStack {
-                
-                Text("Temp")
-                .padding()
-                .offset(y: -50)
+                if (self.errorMsg.count  > 0) {
+                    HStack(alignment: .center) {
+                        Image(systemName: "message")
+                            .padding(.trailing, 10.0)
+                            .font(.title)
+                            
+                        Text(self.errorMsg)
+                            .fontWeight(.bold)
+                            .multilineTextAlignment(.center)
+                            .offset(y: 0)
+                            .font(.system(size: 20))
+                    
+                    }
+                    .padding()
+                    .frame(width: 250, height: 80, alignment: .center)
+                    .foregroundColor(.white)
+                    .background(Color.orange)
+                    .cornerRadius(5)
+                    .offset(y: -16)
+                }
 
                 
                 TextField("Enter Vehicle REG", text: $reg)
@@ -120,9 +138,42 @@ struct ContentView: View {
                     .background(Color(appBlue))
                     .cornerRadius(5)
                 }
+                
             }
+            
+            VStack() {
+                HStack {
+                         Text("Made with")
+                             .fontWeight(.semibold)
+                             .foregroundColor(.white)
+                             .padding(.top, 30)
+                             .accentColor(/*@START_MENU_TOKEN@*/.yellow/*@END_MENU_TOKEN@*/)
+
+                         Image(systemName: "heart")
+                             .padding(.top, 34)
+                             .foregroundColor(.red)
+                             .font(.system(size: 20))
+                             
+                         
+                         Text("by")
+                             .fontWeight(.semibold)
+                             .foregroundColor(.white)
+                             .padding(.top, 30)
+                     }
+                     .frame(width: 210, height: 50, alignment: .center)
+                     
+                     
+                     HStack {
+                         Text("georgecrisan.com")
+                         .fontWeight(.semibold)
+                         .foregroundColor(.white)
+                         //.padding(.top, 30)
+                     }
+            }
+            .frame(height: nil)
+            .offset(x: /*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/380.0/*@END_MENU_TOKEN@*/)
+            
         }
-        
     }
 }
 
