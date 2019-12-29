@@ -21,6 +21,11 @@ struct ContentView: View {
     @State private var results = [Vehicle]()
     @State private var errorMsg: String = ""
     
+    var animation: Animation {
+        Animation.default
+    }
+
+    
     let appBlue = UIColor(r: 0, g: 142, b: 207)
         
     func fetchJsonData(regNr: String) {
@@ -87,7 +92,7 @@ struct ContentView: View {
         ZStack {
             Image("bgimage")
             
-            VStack {
+            VStack() {
                 if (self.errorMsg.count  > 0) {
                     HStack(alignment: .center) {
                         Image(systemName: "message")
@@ -99,6 +104,7 @@ struct ContentView: View {
                             .multilineTextAlignment(.center)
                             .offset(y: 0)
                             .font(.system(size: 20))
+                            .animation(.easeInOut)
                     
                     }
                     .padding()
@@ -107,6 +113,8 @@ struct ContentView: View {
                     .background(Color.orange)
                     .cornerRadius(5)
                     .offset(y: -16)
+                    .animation(animation)
+                    .transition(.move(edge: .top))
                 }
 
                 
