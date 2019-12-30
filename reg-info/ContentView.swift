@@ -20,6 +20,12 @@ struct ContentView: View {
     @State private var reg: String = "".uppercased();
     @State private var results = [Vehicle]()
     @State private var errorMsg: String = ""
+    @EnvironmentObject var showDetails: AppState
+    
+    func toggleShowDetails(into: Bool) {
+        print("executed")
+        self.showDetails.showDetails = into;
+    }
     
     var animation: Animation {
         Animation.default
@@ -57,6 +63,7 @@ struct ContentView: View {
                         self.errorMsg = "Wrong input, please try again!";
                         return;
                     } else {
+                        self.toggleShowDetails(into: true);
                         self.errorMsg = "";
                     }
                     
@@ -90,103 +97,107 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            Image("bgimage")
-            
-            VStack() {
-                if (self.errorMsg.count  > 0) {
-                    HStack(alignment: .center) {
-                        Image(systemName: "message")
-                            .padding(.trailing, 10.0)
-                            .font(.title)
+            if self.showDetails.showDetails {
+                if self.results.count > 0 {
+                    VehicleDetails(vehicleDetails: self.results[0])
+                }
+            } else {
+                Image("bgimage")
+                VStack() {
+                        if (self.errorMsg.count  > 0) {
+                            HStack(alignment: .center) {
+                                Image(systemName: "message")
+                                    .padding(.trailing, 10.0)
+                                    .font(.title)
+                                    
+                                Text(self.errorMsg)
+                                    .fontWeight(.bold)
+                                    .multilineTextAlignment(.center)
+                                    .offset(y: 0)
+                                    .font(.system(size: 20))
+                                    .animation(.easeInOut)
                             
-                        Text(self.errorMsg)
-                            .fontWeight(.bold)
+                            }
+                            .padding()
+                            .frame(width: 250, height: 80, alignment: .center)
+                            .foregroundColor(.white)
+                            .background(Color.orange)
+                            .cornerRadius(5)
+                            .offset(y: -16)
+                            .animation(animation)
+                            .transition(.move(edge: .top))
+                        }
+
+                        
+                        TextField("Enter Vehicle REG", text: $reg)
+                            .foregroundColor(Color.black)
+                            .textFieldStyle(CustomTextFieldStyle())
+                            .padding()
+                            .offset(y: -10)
+                            .autocapitalization(UITextAutocapitalizationType.allCharacters)
                             .multilineTextAlignment(.center)
-                            .offset(y: 0)
-                            .font(.system(size: 20))
-                            .animation(.easeInOut)
+                            .fixedSize()
+                        
+                        Button(action: {
+                            self.fetchJsonData(regNr: self.reg)
+                          }) {
+                            HStack {
+                                Image(systemName: "car")
+                                    .font(.title)
+                                Text("Get Vehicle Info")
+                                    .fontWeight(.semibold)
+                                    .font(.system(size: 18))
+                            }
+                            .frame(width: 210, height: 30, alignment: .center)
+                            .padding()
+                            .foregroundColor(.white)
+                            .background(Color(appBlue))
+                            .cornerRadius(5)
+                        }
+                        
+                    }
                     
-                    }
-                    .padding()
-                    .frame(width: 250, height: 80, alignment: .center)
-                    .foregroundColor(.white)
-                    .background(Color.orange)
-                    .cornerRadius(5)
-                    .offset(y: -16)
-                    .animation(animation)
-                    .transition(.move(edge: .top))
-                }
+                    VStack() {
+                        HStack {
+                                 Text("Made with")
+                                     .fontWeight(.semibold)
+                                     .foregroundColor(.white)
+                                     .padding(.top, 30)
+                                     .accentColor(/*@START_MENU_TOKEN@*/.yellow/*@END_MENU_TOKEN@*/)
 
-                
-                TextField("Enter Vehicle REG", text: $reg)
-                    .foregroundColor(Color.black)
-                    .textFieldStyle(CustomTextFieldStyle())
-                    .padding()
-                    .offset(y: -10)
-                    .autocapitalization(UITextAutocapitalizationType.allCharacters)
-                    .multilineTextAlignment(.center)
-                    .fixedSize()
-                
-                Button(action: {
-                    print("Show vehicle Info")
-                    print(self.errorMsg)
-                    print(self.results)
-                    self.fetchJsonData(regNr: self.reg)
-                  }) {
-                    HStack {
-                        Image(systemName: "car")
-                            .font(.title)
-                        Text("Get Vehicle Info")
-                            .fontWeight(.semibold)
-                            .font(.system(size: 18))
-                    }
-                    .frame(width: 210, height: 30, alignment: .center)
-                    .padding()
-                    .foregroundColor(.white)
-                    .background(Color(appBlue))
-                    .cornerRadius(5)
-                }
-                
-            }
-            
-            VStack() {
-                HStack {
-                         Text("Made with")
-                             .fontWeight(.semibold)
-                             .foregroundColor(.white)
-                             .padding(.top, 30)
-                             .accentColor(/*@START_MENU_TOKEN@*/.yellow/*@END_MENU_TOKEN@*/)
-
-                         Image(systemName: "heart")
-                             .padding(.top, 34)
-                             .foregroundColor(.red)
-                             .font(.system(size: 20))
+                                 Image(systemName: "heart")
+                                     .padding(.top, 34)
+                                     .foregroundColor(.red)
+                                     .font(.system(size: 20))
+                                     
+                                 
+                                 Text("by")
+                                     .fontWeight(.semibold)
+                                     .foregroundColor(.white)
+                                     .padding(.top, 30)
+                             }
+                             .frame(width: 210, height: 50, alignment: .center)
                              
-                         
-                         Text("by")
-                             .fontWeight(.semibold)
-                             .foregroundColor(.white)
-                             .padding(.top, 30)
-                     }
-                     .frame(width: 210, height: 50, alignment: .center)
-                     
-                     
-                     HStack {
-                         Text("georgecrisan.com")
-                         .fontWeight(.semibold)
-                         .foregroundColor(.white)
-                         //.padding(.top, 30)
-                     }
+                             
+                             HStack {
+                                 Text("georgecrisan.com")
+                                 .fontWeight(.semibold)
+                                 .foregroundColor(.white)
+                                 //.padding(.top, 30)
+                             }
+                    }
+                    .frame(height: nil)
+                    .offset(x: /*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/380.0/*@END_MENU_TOKEN@*/)
+                    
+                }
             }
-            .frame(height: nil)
-            .offset(x: /*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/380.0/*@END_MENU_TOKEN@*/)
             
-        }
+            
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        ContentView().environmentObject(AppState()) 
     }
 }
