@@ -63,7 +63,6 @@ struct ContentView: View {
                         self.errorMsg = "Wrong input, please try again!";
                         return;
                     } else {
-                        self.toggleShowDetails(into: true);
                         self.errorMsg = "";
                     }
                     
@@ -75,6 +74,7 @@ struct ContentView: View {
                         print(decodedResponse);
                           DispatchQueue.main.async {
                             self.results = [decodedResponse]
+                            self.toggleShowDetails(into: true);
                           }
                       }
                   }
