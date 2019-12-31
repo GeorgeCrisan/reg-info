@@ -62,7 +62,7 @@ struct VehicleDetails: View {
                 Text("Reg Info")
                     .font(.largeTitle)
                     .fontWeight(.bold).foregroundColor(.white)
-                    .frame(width: 360, height: 100, alignment: .center)
+                    .frame(width: 320, height: 60, alignment: .center)
             }
             
             HStack {
@@ -81,7 +81,7 @@ struct VehicleDetails: View {
                     
                     
             }
-            .frame(width: 360, height: 50, alignment: .leading)
+            .frame(width: 320, height: 50, alignment: .leading)
             .background(Color.black)
             .opacity(0.8)
             
@@ -103,7 +103,7 @@ struct VehicleDetails: View {
                     .padding()
                     .foregroundColor(Color(appYellow))
             }
-            .frame(width: 360, height: 50, alignment: .leading)
+            .frame(width: 320, height: 50, alignment: .leading)
             .background(Color.black)
             .opacity(0.8)
             
@@ -123,7 +123,7 @@ struct VehicleDetails: View {
                     .padding()
                     .foregroundColor(Color(appYellow))
             }
-            .frame(width: 360, height: 50, alignment: .leading)
+            .frame(width: 320, height: 50, alignment: .leading)
             .background(Color.black)
             .opacity(0.8)
             
@@ -141,7 +141,7 @@ struct VehicleDetails: View {
                     .padding()
                     .foregroundColor(Color(appYellow))
             }
-            .frame(width: 360, height: 50, alignment: .leading)
+            .frame(width: 320, height: 50, alignment: .leading)
             .background(Color.black)
             .opacity(0.8)
             
@@ -159,7 +159,7 @@ struct VehicleDetails: View {
                     .padding()
                     .foregroundColor(Color(appYellow))
             }
-            .frame(width: 360, height: 50, alignment: .leading)
+            .frame(width: 320, height: 50, alignment: .leading)
             .background(Color.black)
             .opacity(0.8)
             
@@ -177,7 +177,7 @@ struct VehicleDetails: View {
                     .padding()
                     .foregroundColor(Color(appYellow))
             }
-            .frame(width: 360, height: 50, alignment: .leading)
+            .frame(width: 320, height: 50, alignment: .leading)
             .background(Color.black)
             .opacity(0.8)
             
@@ -195,7 +195,7 @@ struct VehicleDetails: View {
                     .padding()
                     .foregroundColor(Color(appYellow))
             }
-            .frame(width: 360, height: 50, alignment: .leading)
+            .frame(width: 320, height: 50, alignment: .leading)
             .background(Color.black)
             .opacity(0.8)
             
@@ -203,7 +203,7 @@ struct VehicleDetails: View {
             HStack {
                 Text("Some add")
                     .fontWeight(.bold).foregroundColor(.white)
-                    .frame(width: 360, height: 100, alignment: .center)
+                    .frame(width: 320, height: 60, alignment: .center)
             }
 
             //MARK - Button
@@ -225,7 +225,8 @@ struct VehicleDetails: View {
             }
             
             
-        }
+        }.frame(minWidth: 0, maxWidth: .infinity,
+        minHeight: 0, maxHeight: .infinity)
     }
 }
 

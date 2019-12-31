@@ -201,7 +201,7 @@ struct ContentView: View {
                             Text("georgecrisan.com")
                             .fontWeight(.semibold)
                             .foregroundColor(.white)
-                            //.padding(.top, 30)
+                            .padding(.bottom, 30)
                         }
                     }
                 }.frame(minWidth: 0, maxWidth: .infinity,
