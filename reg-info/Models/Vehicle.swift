@@ -21,7 +21,7 @@ struct Vehicle: Codable {
     var make: String
     var typeApproval: String?
     var yearOfManufacture: Int?
-    var taxDueDate: String?
+    var taxDueDate: String
     var taxStatus: String
     var dateOfLastV5CIssued: String?
     var motExpiryDate: String?

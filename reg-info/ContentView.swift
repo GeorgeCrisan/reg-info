@@ -17,14 +17,13 @@ extension UIColor {
 
 struct ContentView: View {
     
-    @State private var reg: String = "".uppercased();
+    @State private var reg: String = "".uppercased()
     @State private var results = [Vehicle]()
     @State private var errorMsg: String = ""
     @EnvironmentObject var showDetails: AppState
     
     func toggleShowDetails(into: Bool) {
-        print("executed")
-        self.showDetails.showDetails = into;
+        self.showDetails.showDetails = into
     }
     
     var animation: Animation {
@@ -37,22 +36,22 @@ struct ContentView: View {
     func fetchJsonData(regNr: String) {
         
         if (regNr.count == 0) {
-            self.errorMsg = "Wrong input, please try again!";
+            self.errorMsg = "Wrong input, please try again!"
             return
         }
         
-          let url = EnvironmentVars.apiURL;
-          let secret = EnvironmentVars.apiSECRET;
-          let headerKey = EnvironmentVars.apiKEY;
+          let url = EnvironmentVars.apiURL
+          let secret = EnvironmentVars.apiSECRET
+          let headerKey = EnvironmentVars.apiKEY
           let session = URLSession.shared
           var request = URLRequest(url: url)
-          request.httpMethod = "POST";
+          request.httpMethod = "POST"
           request.setValue("application/json", forHTTPHeaderField: "Content-Type")
           request.setValue(secret, forHTTPHeaderField: headerKey)
           
           let bodyData = [
               "registrationNumber": regNr
-          ];
+          ]
           
           if let jsonData = try? JSONSerialization.data(withJSONObject: bodyData, options: []) {
               session.uploadTask(with: request, from: jsonData) { data, response , error in
@@ -60,21 +59,20 @@ struct ContentView: View {
                 
                 if let httpResponse = response as? HTTPURLResponse {
                     if (httpResponse.statusCode != 200) {
-                        self.errorMsg = "Wrong input, please try again!";
-                        return;
+                        self.errorMsg = "Wrong input, please try again!"
+                        return
                     } else {
-                        self.errorMsg = "";
+                        self.errorMsg = ""
                     }
                     
                 }
                 
                   if let data = data {
                     if let decodedResponse = try? JSONDecoder().decode(Vehicle.self, from: data) {
-                        
-                        print(decodedResponse);
+                    
                           DispatchQueue.main.async {
                             self.results = [decodedResponse]
-                            self.toggleShowDetails(into: true);
+                            self.toggleShowDetails(into: true)
                           }
                       }
                   }
@@ -99,11 +97,29 @@ struct ContentView: View {
         ZStack {
             if self.showDetails.showDetails {
                 if self.results.count > 0 {
+                    Image("bgimage")
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+                    .animation(animation)
+                    .transition(.move(edge: .top))
+                    
                     VehicleDetails(vehicleDetails: self.results[0])
+                        .animation(animation)
+                        .transition(.move(edge: .top))
                 }
             } else {
                 Image("bgimage")
-                VStack() {
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+                    .animation(animation)
+                    .transition(.move(edge: .bottom))
+                   
+               
+                
+                ZStack {
+                     VStack {
                         if (self.errorMsg.count  > 0) {
                             HStack(alignment: .center) {
                                 Image(systemName: "message")
@@ -138,7 +154,8 @@ struct ContentView: View {
                             .multilineTextAlignment(.center)
                             .fixedSize()
                         
-                        Button(action: {
+                   
+                     Button(action: {
                             self.fetchJsonData(regNr: self.reg)
                           }) {
                             HStack {
@@ -154,45 +171,45 @@ struct ContentView: View {
                             .background(Color(appBlue))
                             .cornerRadius(5)
                         }
+                    }
                         
-                    }
-                    
-                    VStack() {
+                    Spacer()
+                    VStack {
+                        Spacer()
                         HStack {
-                                 Text("Made with")
-                                     .fontWeight(.semibold)
-                                     .foregroundColor(.white)
-                                     .padding(.top, 30)
-                                     .accentColor(/*@START_MENU_TOKEN@*/.yellow/*@END_MENU_TOKEN@*/)
+                            Text("Made with")
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                                .padding(.top, 30)
+                                .accentColor(/*@START_MENU_TOKEN@*/.yellow/*@END_MENU_TOKEN@*/)
 
-                                 Image(systemName: "heart")
-                                     .padding(.top, 34)
-                                     .foregroundColor(.red)
-                                     .font(.system(size: 20))
-                                     
-                                 
-                                 Text("by")
-                                     .fontWeight(.semibold)
-                                     .foregroundColor(.white)
-                                     .padding(.top, 30)
-                             }
-                             .frame(width: 210, height: 50, alignment: .center)
-                             
-                             
-                             HStack {
-                                 Text("georgecrisan.com")
-                                 .fontWeight(.semibold)
-                                 .foregroundColor(.white)
-                                 //.padding(.top, 30)
-                             }
+                            Image(systemName: "heart")
+                                .padding(.top, 34)
+                                .foregroundColor(.red)
+                                .font(.system(size: 20))
+                                
+                            
+                            Text("by")
+                                .fontWeight(.semibold)
+                                .foregroundColor(.white)
+                                .padding(.top, 30)
+                        }
+                        .frame(width: 210, height: 50, alignment: .center)
+                        
+                        
+                        HStack {
+                            Text("georgecrisan.com")
+                            .fontWeight(.semibold)
+                            .foregroundColor(.white)
+                            //.padding(.top, 30)
+                        }
                     }
-                    .frame(height: nil)
-                    .offset(x: /*@START_MENU_TOKEN@*/10.0/*@END_MENU_TOKEN@*/, y: /*@START_MENU_TOKEN@*/380.0/*@END_MENU_TOKEN@*/)
-                    
-                }
+                }.frame(minWidth: 0, maxWidth: .infinity,
+                minHeight: 0, maxHeight: .infinity)
             }
             
-            
+        }
+        
     }
 }
 
