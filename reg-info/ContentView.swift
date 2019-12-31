@@ -97,12 +97,12 @@ struct ContentView: View {
         ZStack {
             if self.showDetails.showDetails {
                 if self.results.count > 0 {
-                    Image("bgimage")
-                    .resizable()
-                    .scaledToFill()
-                    .edgesIgnoringSafeArea(.all)
-                    .animation(animation)
-                    .transition(.move(edge: .top))
+                    Image("bg399")
+                        .resizable()
+                        .scaledToFill()
+                        .edgesIgnoringSafeArea(.all)
+                        .animation(animation)
+                        .transition(.move(edge: .top))
                     
                     VehicleDetails(vehicleDetails: self.results[0])
                         .animation(animation)

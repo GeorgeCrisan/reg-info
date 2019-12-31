@@ -59,31 +59,34 @@ struct VehicleDetails: View {
     var body: some View {
         VStack {
             HStack {
-                Text("Reg Info")
-                    .font(.largeTitle)
-                    .fontWeight(.bold).foregroundColor(.white)
+                Text("Vehicle Info")
+                    .font(.title)
+                    .underline()
+                      .foregroundColor(.white)
                     .frame(width: 320, height: 60, alignment: .center)
             }
             
             HStack {
                 
-                Text("Registration:")
-                    .fontWeight(.bold).foregroundColor(.white)
-                    .padding()
-                .frame(width: 140, height: 50, alignment: .leading)
-                    Divider()
+                Text("RegNr:")
+                    .fontWeight(.semibold)
+                    .font(.system(size: 14))
+                    .foregroundColor(.white)
+                    .padding(.leading)
+                .frame(width: 116, height: 40, alignment: .leading)
+                Divider().background(Color.white)
                 Text("\(vehicleDetails.registrationNumber ?? "n/a")")
-                    .underline()
-                    .fontWeight(.bold)
+                      .fontWeight(.semibold)
+                    .font(.system(size: 14))
                     .lineLimit(2)
                     .padding()
                     .foregroundColor(Color(appYellow))
                     
                     
             }
-            .frame(width: 320, height: 50, alignment: .leading)
-            .background(Color.black)
-            .opacity(0.8)
+            .frame(width: 320, height: 40, alignment: .leading)
+            .background(Color.gray)
+            .opacity(0.9).cornerRadius(5)
             
             
             
@@ -91,118 +94,130 @@ struct VehicleDetails: View {
             
             HStack {
                 Text("Make:")
-                    .fontWeight(.bold).foregroundColor(.white)
+                    .fontWeight(.semibold)
+                    .font(.system(size: 14))
+                      .foregroundColor(.white)
                     .padding()
-                    .frame(width: 140, height: 50, alignment: .leading)
+                    .frame(width: 116, height: 40, alignment: .leading)
 
-                    Divider()
+                    Divider().background(Color.white)
                 Text("\(vehicleDetails.make )")
-                    .underline()
-                    .fontWeight(.bold)
+                      .fontWeight(.semibold)
+                     .font(.system(size: 14))
                     .lineLimit(2)
                     .padding()
                     .foregroundColor(Color(appYellow))
             }
-            .frame(width: 320, height: 50, alignment: .leading)
-            .background(Color.black)
-            .opacity(0.8)
+            .frame(width: 320, height: 40, alignment: .leading)
+            .background(Color.gray)
+            .opacity(0.9).cornerRadius(5)
             
             
             HStack {
                 Text("Colour:")
-                    .fontWeight(.bold).foregroundColor(.white)
+                    .fontWeight(.semibold)
+                    .font(.system(size: 14))
+                    .foregroundColor(.white)
                     .padding()
-                    .frame(width: 140, height: 50, alignment: .leading)
+                    .frame(width: 116, height: 40, alignment: .leading)
 
-                Divider()
+                Divider().background(Color.white)
                 
                 Text("\(vehicleDetails.colour ?? "n/a")")
-                    .underline()
-                    .fontWeight(.bold)
+                      .fontWeight(.semibold)
+                    .font(.system(size: 14))
                     .lineLimit(2)
                     .padding()
                     .foregroundColor(Color(appYellow))
             }
-            .frame(width: 320, height: 50, alignment: .leading)
-            .background(Color.black)
-            .opacity(0.8)
+            .frame(width: 320, height: 40, alignment: .leading)
+            .background(Color.gray)
+            .opacity(0.9).cornerRadius(5)
             
             HStack {
                 Text("MOT Status:")
-                    .fontWeight(.bold).foregroundColor(.white)
+                    .fontWeight(.semibold)
+                    .font(.system(size: 14))
+                    .foregroundColor(.white)
                     .padding()
-                    .frame(width: 140, height: 50, alignment: .leading)
+                    .frame(width: 116, height: 40, alignment: .leading)
 
-                    Divider()
+                    Divider().background(Color.white)
                 Text("\(vehicleDetails.motStatus ?? "n/a")")
-                    .underline()
-                    .fontWeight(.bold)
+                      .fontWeight(.semibold)
+                    .font(.system(size: 14))
                     .lineLimit(2)
                     .padding()
                     .foregroundColor(Color(appYellow))
             }
-            .frame(width: 320, height: 50, alignment: .leading)
-            .background(Color.black)
-            .opacity(0.8)
+            .frame(width: 320, height: 40, alignment: .leading)
+            .background(Color.gray)
+            .opacity(0.9).cornerRadius(5)
             
             HStack {
                 Text("MOT Due:")
-                    .fontWeight(.bold).foregroundColor(.white)
+                    .fontWeight(.semibold)
+                    .font(.system(size: 14))
+                      .foregroundColor(.white)
                     .padding()
-                    .frame(width: 140, height: 50, alignment: .leading)
+                    .frame(width: 116, height: 40, alignment: .leading)
 
-                    Divider()
+                    Divider().background(Color.white)
                 Text("\(formatDate(date: vehicleDetails.motExpiryDate ?? "n/a") )")
-                    .underline()
-                    .fontWeight(.bold)
+                      .fontWeight(.semibold)
+                    .font(.system(size: 14))
                     .lineLimit(2)
                     .padding()
                     .foregroundColor(Color(appYellow))
             }
-            .frame(width: 320, height: 50, alignment: .leading)
-            .background(Color.black)
-            .opacity(0.8)
+            .frame(width: 320, height: 40, alignment: .leading)
+            .background(Color.gray)
+            .opacity(0.9).cornerRadius(5)
             
             HStack {
                 Text("TAX Status:")
-                    .fontWeight(.bold).foregroundColor(.white)
+                    .fontWeight(.semibold)
+                    .font(.system(size: 14))
+                      .foregroundColor(.white)
                     .padding()
-                    .frame(width: 140, height: 50, alignment: .leading)
+                    .frame(width: 116, height: 40, alignment: .leading)
 
-                    Divider()
+                    Divider().background(Color.white)
                 Text("\(vehicleDetails.taxStatus )")
-                    .underline()
-                    .fontWeight(.bold)
+                      .fontWeight(.semibold)
+                    .font(.system(size: 14))
                     .lineLimit(2)
                     .padding()
                     .foregroundColor(Color(appYellow))
             }
-            .frame(width: 320, height: 50, alignment: .leading)
-            .background(Color.black)
-            .opacity(0.8)
+            .frame(width: 320, height: 40, alignment: .leading)
+            .background(Color.gray)
+            .opacity(0.9).cornerRadius(5)
             
             HStack {
                 Text("Tax Due:")
-                    .fontWeight(.bold).foregroundColor(.white)
+                    .fontWeight(.semibold)
+                    .font(.system(size: 14))
+                      .foregroundColor(.white)
                     .padding()
-                    .frame(width: 140, height: 50, alignment: .leading)
+                    .frame(width: 116, height: 40, alignment: .leading)
 
-                    Divider()
+                    Divider().background(Color.white)
                 Text("\(formatDate(date: vehicleDetails.taxDueDate) )")
-                    .underline()
-                    .fontWeight(.bold)
+                    .fontWeight(.semibold)
+                    .font(.system(size: 14))
                     .lineLimit(2)
                     .padding()
                     .foregroundColor(Color(appYellow))
             }
-            .frame(width: 320, height: 50, alignment: .leading)
-            .background(Color.black)
-            .opacity(0.8)
+            .frame(width: 320, height: 40, alignment: .leading)
+            .background(Color.gray)
+            .opacity(0.9).cornerRadius(5)
             
             
             HStack {
                 Text("Some add")
-                    .fontWeight(.bold).foregroundColor(.white)
+                      .foregroundColor(.white)
                     .frame(width: 320, height: 60, alignment: .center)
             }
 
@@ -212,12 +227,12 @@ struct VehicleDetails: View {
             }) {
             HStack {
                 Text("↜")
-                    .font(.system(size: 46))
+                    .font(.system(size: 36))
                 Text("Go back")
-                    .fontWeight(.bold)
-                    .font(.system(size: 18))
+                    .fontWeight(.semibold)
+                    .font(.system(size: 16))
             }
-            .frame(width: 260, height: 30, alignment: .center)
+            .frame(width: 260, height: 10, alignment: .center)
             .padding()
             .foregroundColor(Color.white)
             .background(Color(appBlue))
