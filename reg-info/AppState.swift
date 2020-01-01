@@ -11,4 +11,5 @@ import Foundation
 
 class AppState: ObservableObject {
     @Published var showDetails = false
+    @Published var loading = false
 }

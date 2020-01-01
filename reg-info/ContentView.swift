@@ -9,21 +9,53 @@
 import SwiftUI
 
 extension UIColor {
-    convenience init(r: CGFloat, g: CGFloat, b: CGFloat) {
-        self.init(red: r/255, green: g/255, blue: b/255, alpha: 1)
+    convenience init(r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat ) {
+        self.init(red: r/255, green: g/255, blue: b/255, alpha: a)
     }
 }
 
+//Indicator Start
+
+struct ActivityIndicator: View {
+
+  @State private var isAnimating: Bool = false
+
+  var body: some View {
+    GeometryReader { (geometry: GeometryProxy) in
+      ForEach(0..<5) { index in
+        Group {
+          Circle()
+            .frame(width: geometry.size.width / 5, height: geometry.size.height / 5)
+            .scaleEffect(!self.isAnimating ? 1 - CGFloat(index) / 5 : 0.2 + CGFloat(index) / 5)
+            .offset(y: geometry.size.width / 10 - geometry.size.height / 2)
+          }.frame(width: geometry.size.width, height: geometry.size.height)
+            .rotationEffect(!self.isAnimating ? .degrees(0) : .degrees(360))
+            .animation(Animation
+              .timingCurve(0.5, 0.15 + Double(index) / 5, 0.25, 1, duration: 1.5)
+              .repeatForever(autoreverses: false))
+        }
+      }
+    .aspectRatio(1, contentMode: .fit)
+    .onAppear {
+        self.isAnimating = true
+    }
+  }
+}
+
+// Indicator End
 
 struct ContentView: View {
     
     @State private var reg: String = "".uppercased()
     @State private var results = [Vehicle]()
     @State private var errorMsg: String = ""
-    @EnvironmentObject var showDetails: AppState
+    @EnvironmentObject var gState: AppState
     
     func toggleShowDetails(into: Bool) {
-        self.showDetails.showDetails = into
+        self.gState.loading = false;
+        self.gState.showDetails = into
+        
+        
     }
     
     var animation: Animation {
@@ -31,9 +63,13 @@ struct ContentView: View {
     }
 
     
-    let appBlue = UIColor(r: 0, g: 142, b: 207)
+    let appBlue = UIColor(r: 0, g: 142, b: 207, a: 1)
+    let appYellow2 = UIColor(r: 255, g: 216, b: 0, a: 0.9)
         
     func fetchJsonData(regNr: String) {
+        
+        print(self.gState.loading)
+        print("loading start")
         
         if (regNr.count == 0) {
             self.errorMsg = "Wrong input, please try again!"
@@ -82,7 +118,7 @@ struct ContentView: View {
       }
     
     public struct CustomTextFieldStyle : TextFieldStyle {
-            let appYellow = UIColor(r: 255, g: 216, b: 0)
+        let appYellow = UIColor(r: 255, g: 216, b: 0, a: 0.8)
            public func _body(configuration: TextField<Self._Label>) -> some View {
                configuration
                 .font(.title)
@@ -95,7 +131,19 @@ struct ContentView: View {
     
     var body: some View {
         ZStack {
-            if self.showDetails.showDetails {
+            
+            if self.gState.loading == true {
+                Image("bgimage")
+                VStack {
+                    ActivityIndicator().frame(width: 50, height: 50).foregroundColor(Color(appYellow2))
+                    Text("Loading ...")
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .font(.system(size: 20))
+                    .padding()
+                    .foregroundColor(Color(appYellow2))
+                }
+            } else if self.gState.showDetails {
                 if self.results.count > 0 {
                     Image("bg399")
                         .resizable()
