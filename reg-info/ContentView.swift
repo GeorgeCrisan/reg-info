@@ -7,6 +7,8 @@
 //
 
 import SwiftUI
+import GoogleMobileAds
+import UIKit
 
 extension UIColor {
     convenience init(r: CGFloat, g: CGFloat, b: CGFloat, a: CGFloat ) {
@@ -15,6 +17,25 @@ extension UIColor {
 }
 
 //Indicator Start
+final private class BannerVC: UIViewControllerRepresentable  {
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        let view = GADBannerView(adSize: kGADAdSizeBanner)
+
+        let viewController = UIViewController()
+        view.adUnitID = "ca-app-pub-2372442392819950/1908865270"
+        // test view.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        view.rootViewController = viewController
+        viewController.view.addSubview(view)
+        viewController.view.frame = CGRect(origin: .zero, size: kGADAdSizeBanner.size)
+        view.load(GADRequest())
+
+        return viewController
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
+
 
 struct ActivityIndicator: View {
 
@@ -69,7 +90,6 @@ struct ContentView: View {
     func fetchJsonData(regNr: String) {
         
         self.gState.loading = true;
-        print("loading start")
         
         if (regNr.count == 0) {
             self.gState.loading = false;
@@ -96,7 +116,10 @@ struct ContentView: View {
                 
                 if let httpResponse = response as? HTTPURLResponse {
                     if (httpResponse.statusCode != 200) {
-                        self.gState.loading = false;
+                        DispatchQueue.main.async {
+                            self.gState.loading = false;
+                        }
+                        
                         self.errorMsg = "Wrong input, please try again!"
                         return
                     } else {
@@ -120,7 +143,7 @@ struct ContentView: View {
       }
     
     public struct CustomTextFieldStyle : TextFieldStyle {
-        let appYellow = UIColor(r: 255, g: 216, b: 0, a: 0.8)
+        let appYellow = UIColor(r: 255, g: 216, b: 0, a: 0.87)
            public func _body(configuration: TextField<Self._Label>) -> some View {
                configuration
                 .font(.title)
@@ -136,6 +159,8 @@ struct ContentView: View {
             
             if self.gState.loading == true {
                 Image("bgimage")
+                .animation(animation)
+                .transition(.move(edge: .top))
                 VStack {
                     ActivityIndicator().frame(width: 50, height: 50).foregroundColor(Color(appYellow2))
                     Text("Loading ...")
@@ -227,6 +252,11 @@ struct ContentView: View {
                     VStack {
                         Spacer()
                         HStack {
+                            Spacer()
+                            BannerVC().frame(width: 320, height: 50, alignment: .center)
+                            Spacer()
+                        }
+                        HStack {
                             Text("Made with")
                                 .fontWeight(.semibold)
                                 .foregroundColor(.white)
@@ -253,7 +283,9 @@ struct ContentView: View {
                             .foregroundColor(.white)
                             .padding(.bottom, 30)
                         }
+                        
                     }
+                    
                 }.frame(minWidth: 0, maxWidth: .infinity,
                 minHeight: 0, maxHeight: .infinity)
             }

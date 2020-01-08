@@ -7,6 +7,27 @@
 //
 import Foundation
 import SwiftUI
+import GoogleMobileAds
+import UIKit
+
+final private class BannerVC2: UIViewControllerRepresentable  {
+
+    func makeUIViewController(context: Context) -> UIViewController {
+        let view = GADBannerView(adSize: kGADAdSizeBanner)
+
+        let viewController = UIViewController()
+        view.adUnitID = "ca-app-pub-2372442392819950/2776391678"
+        // TEST view.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+        view.rootViewController = viewController
+        viewController.view.addSubview(view)
+        viewController.view.frame = CGRect(origin: .zero, size: kGADAdSizeBanner.size)
+        view.load(GADRequest())
+
+        return viewController
+    }
+
+    func updateUIViewController(_ uiViewController: UIViewController, context: Context) {}
+}
 
 struct BottomLineTextFieldStyle: TextFieldStyle {
     func _body(configuration: TextField<Self._Label>) -> some View {
@@ -218,10 +239,12 @@ struct VehicleDetails: View {
             
             
             HStack {
-                Text("Some add")
-                      .foregroundColor(.white)
-                    .frame(width: 320, height: 60, alignment: .center)
+                Spacer()
+                BannerVC2().frame(width: 320, height: 50, alignment: .center)
+                Spacer()
             }
+            .padding(30)
+
 
             //MARK - Button
             Button(action: {
