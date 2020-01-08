@@ -68,10 +68,11 @@ struct ContentView: View {
         
     func fetchJsonData(regNr: String) {
         
-        print(self.gState.loading)
+        self.gState.loading = true;
         print("loading start")
         
         if (regNr.count == 0) {
+            self.gState.loading = false;
             self.errorMsg = "Wrong input, please try again!"
             return
         }
@@ -95,6 +96,7 @@ struct ContentView: View {
                 
                 if let httpResponse = response as? HTTPURLResponse {
                     if (httpResponse.statusCode != 200) {
+                        self.gState.loading = false;
                         self.errorMsg = "Wrong input, please try again!"
                         return
                     } else {
